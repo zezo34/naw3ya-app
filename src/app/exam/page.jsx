@@ -38,7 +38,7 @@ export default function ExamPage() {
         answer: 1,
     },
     
-    ,{
+    {
     q: "ما هو الثابت في البرمجة؟",
     options: ["قيمة تتغير", "قيمة ثابتة لا تتغير", "دالة", "متغير"],
     answer: 1,
