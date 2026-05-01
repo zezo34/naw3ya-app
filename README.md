@@ -36,6 +36,7 @@ The easiest way to deploy your Next.js app is to use the [Vercel Platform](https
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
 
 
+
 ```
 naw3ya-app
 ├─ AGENTS.md
@@ -49,25 +50,28 @@ naw3ya-app
 │  ├─ file.svg
 │  ├─ globe.svg
 │  ├─ images
-│  │  ├─ 1.jpeg
-│  │  ├─ 2.jpeg
-│  │  ├─ 3.jpeg
-│  │  ├─ 4.jpeg
-│  │  ├─ 5.jpeg
-│  │  └─ 6.jpeg
+│  │  ├─ image2.png
+│  │  └─ images.png
 │  ├─ next.svg
 │  ├─ vercel.svg
 │  └─ window.svg
 ├─ README.md
 └─ src
    └─ app
-      ├─ about
-      │  └─ page.jsx
+      ├─ api
+      │  └─ auth
+      │     └─ [...nextauth]
+      │        └─ route.js
+      ├─ components
+      │  ├─ AuthProvider.jsx
+      │  └─ Navbar.jsx
       ├─ exam
       │  └─ page.jsx
       ├─ favicon.ico
       ├─ globals.css
       ├─ layout.js
+      ├─ login
+      │  └─ page.jsx
       ├─ page.js
       ├─ unit1
       │  ├─ lesson1
