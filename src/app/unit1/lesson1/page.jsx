@@ -51,7 +51,7 @@ export default function Lesson1() {
             </section>
 
             {/* سكشن الروابط التعليمية (فيديوهات) */}
-            <section className="bg-blue-50 p-6 rounded-[2rem] border-2 border-blue-100">
+            <section className="bg-blue-50 p-6 rounded-4xl border-2 border-blue-100">
               <h2 className="text-2xl font-bold text-blue-800 mb-4 flex items-center gap-2">🎬 فيديوهات توضيحية</h2>
               <div className="space-y-3">
                 <a href="https://youtu.be/MwQEaCsS6UM?si=jemYJJqS-S_OlBGA" target="_blank" className="flex items-center p-3 bg-white rounded-xl shadow-sm hover:bg-blue-100 transition-colors">

@@ -43,7 +43,7 @@ export default function Lesson2() {
             </div>
 
             {/* سكشن الروابط التعليمية (فيديوهات) */}
-            <section className="bg-red-50 p-6 rounded-[2rem] border-2 border-red-100">
+            <section className="bg-red-50 p-6 rounded-4xl border-2 border-red-100">
               <h2 className="text-2xl font-bold text-red-800 mb-4 flex items-center gap-2">🎬 فيديوهات توضيحية</h2>
               <div className="space-y-3">
                 <a href="https://youtu.be/nWS_4xag_Xc?si=phGuuhnb1uUYBjzq" target="_blank" className="flex items-center p-3 bg-white rounded-xl shadow-sm hover:bg-red-100 transition-colors">
@@ -59,7 +59,7 @@ export default function Lesson2() {
         
 
             {/* شروط التسمية */}
-            <section className="bg-amber-50 p-6 rounded-[2rem] border-2 border-amber-100">
+            <section className="bg-amber-50 p-6 rounded-4xl border-2 border-amber-100">
               <h2 className="text-2xl font-bold text-amber-800 mb-4">⚠️ شروط تسمية المتغير</h2>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm">
                 {[
