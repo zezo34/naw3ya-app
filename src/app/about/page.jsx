@@ -1,34 +1,33 @@
-"use client"; // ده أهم سطر عشان يمنع الـ Server Error
-
+"use client";
 import Link from "next/link";
 
 export default function AboutPage() {
   return (
-    <div dir="rtl" className="min-h-screen bg-purple-400 p-6 md:p-12">
-      <div className="max-w-3xl mx-auto">
+    <div dir="rtl" className="min-h-screen bg-[#776ea5] p-6 md:p-12 flex items-center justify-center">
+      <div className="max-w-3xl w-full">
         
-        <div className="bg-white rounded-[2.5rem] p-8 md:p-12 shadow-2xl border-b-8 border-purple-200">
+        <div className="bg-white rounded-[3.5rem] p-8 md:p-12 shadow-2xl border-b-8 border-gray-100">
           
           <div className="text-center mb-10">
-            <h1 className="text-4xl md:text-5xl font-black text-purple-600 mb-4">
-              عن منصة "نوعية"
+            <h1 className="text-4xl md:text-5xl font-black text-[#776ea5] mb-4">
+              عن منصة "نواعية"
             </h1>
-            <div className="h-1.5 w-20 bg-purple-200 mx-auto rounded-full"></div>
+            <div className="h-2 w-24 bg-[#ffcc00] mx-auto rounded-full"></div>
           </div>
 
           <div className="space-y-8 text-right">
             <section>
               <h2 className="text-2xl font-bold text-gray-800 mb-3 flex items-center gap-2">
-                <span className="text-purple-500">🚀</span> ما هي منصة نوعية؟
+                <span className="text-[#ffcc00]">🚀</span> ما هي منصة نوعية؟
               </h2>
-              <p className="text-gray-600 leading-relaxed font-semibold">
-                منصة تعليمية تفاعلية مخصصة لطلاب تكنولوجيا التعليم، تهدف لتبسيط مفاهيم البرمجة مثل الثوابت والمتغيرات بأسلوب عصري.
+              <p className="text-gray-600 leading-relaxed font-semibold text-lg">
+                منصة تعليمية تفاعلية مخصصة لطلاب تكنولوجيا التعليم، تهدف لتبسيط مفاهيم البرمجة مثل الثوابت والمتغيرات بأسلوب عصري وجذاب.
               </p>
             </section>
 
             <section>
               <h2 className="text-2xl font-bold text-gray-800 mb-4 flex items-center gap-2">
-                <span className="text-purple-500">🎯</span> أهدافنا:
+                <span className="text-[#ffcc00]">🎯</span> أهدافنا:
               </h2>
               <ul className="space-y-3">
                 {[
@@ -36,7 +35,7 @@ export default function AboutPage() {
                   "توفير اختبارات تفاعلية فورية.",
                   "دعم مهارات البرمجة لطلاب جامعة عين شمس."
                 ].map((goal, i) => (
-                  <li key={i} className="bg-purple-50 p-4 rounded-xl border border-purple-100 text-gray-700 font-bold">
+                  <li key={i} className="bg-gray-50 p-4 rounded-2xl border-r-8 border-[#776ea5] text-gray-700 font-bold">
                     • {goal}
                   </li>
                 ))}
@@ -44,10 +43,10 @@ export default function AboutPage() {
             </section>
           </div>
 
-          <div className="mt-10 text-center">
+          <div className="mt-12 text-center">
             <Link 
               href="/" 
-              className="inline-block bg-purple-600 text-white px-8 py-3 rounded-2xl font-bold hover:bg-purple-700 transition-all shadow-lg shadow-purple-100"
+              className="inline-block bg-[#ffcc00] text-[#776ea5] px-12 py-4 rounded-2xl font-black text-xl hover:bg-[#e6b800] transition-all shadow-xl"
             >
               العودة للرئيسية
             </Link>

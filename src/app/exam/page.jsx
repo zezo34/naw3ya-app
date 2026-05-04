@@ -19,7 +19,7 @@ export default function ExamPage() {
     { q: "الثوابت النصية هي مجموعة حروف أو رموز تكتب بين:", options: ["أقواس ( )", "علامتي اقتباس \" \"", "مربعات [ ]", "نجوم * *"], answer: 1 },
     { q: "تستخدم الثوابت الأسية لتمثيل الأعداد:", options: ["الصغيرة جداً أو الكبيرة جداً", "النصية فقط", "المتغيرة", "الأسماء"], answer: 0 },
     { q: "في الصيغة 23E-2، ماذا يمثل الحرف E؟", options: ["جمع", "طرح", "10 أس", "قسمة"], answer: 2 },
-    { q: "الصيغة -2.1E2 تعني رياضياً -2.1 × 10².", options: ["صح", "خطأ"], answer: 0 },
+    { q: "-2.1E2 تعني رياضياً -2.1 × 10².", options: ["صح", "خطأ"], answer: 0 },
     { q: "تستخدم الثوابت النصية في العمليات الحسابية.", options: ["صح", "خطأ"], answer: 1 },
     { q: "من أهمية الثوابت تسهيل قراءة الكود وتقليل الأخطاء.", options: ["صح", "خطأ"], answer: 0 },
     { q: "الثابت \"My Computer\" هو ثابت نصي.", options: ["صح", "خطأ"], answer: 0 },
@@ -54,26 +54,26 @@ export default function ExamPage() {
 
   if (showResult) {
     return (
-      <div dir="rtl" className="min-h-screen flex items-center justify-center bg-purple-400 p-6">
+      <div dir="rtl" className="min-h-screen flex items-center justify-center bg-[#776ea5] p-6">
         <div className="bg-white rounded-[3rem] shadow-2xl p-10 text-center max-w-md w-full">
-          <h2 className="text-4xl font-black text-purple-600 mb-4">انتهى الاختبار!</h2>
-          <p className="text-2xl font-bold text-gray-700 mb-6">درجتك هي: <span className="text-purple-500">{calculateScore()}</span> من {questions.length}</p>
-          <button onClick={() => window.location.reload()} className="bg-purple-600 text-white px-10 py-4 rounded-2xl font-black shadow-lg hover:bg-purple-700 transition-all">إعادة المحاولة</button>
+          <h2 className="text-4xl font-black text-[#776ea5] mb-4">انتهى الاختبار!</h2>
+          <p className="text-2xl font-bold text-gray-700 mb-6">درجتك هي: <span className="text-[#ffcc00] drop-shadow-sm">{calculateScore()}</span> من {questions.length}</p>
+          <button onClick={() => window.location.reload()} className="bg-[#ffcc00] text-[#776ea5] px-10 py-4 rounded-2xl font-black shadow-lg hover:bg-[#e6b800] transition-all">إعادة المحاولة</button>
         </div>
       </div>
     );
   }
 
   return (
-    <div dir="rtl" className="min-h-screen flex flex-col items-center bg-purple-400 p-6">
+    <div dir="rtl" className="min-h-screen flex flex-col items-center bg-[#776ea5] p-6">
       <div className="max-w-2xl w-full text-center mt-10">
         <h1 className="text-4xl font-extrabold text-white mb-8 drop-shadow-lg">اختبار الوحدة الأولى</h1>
         
-        <div className="bg-white rounded-[2.5rem] shadow-2xl p-8 text-right border-b-8 border-purple-200">
+        <div className="bg-white rounded-[2.5rem] shadow-2xl p-8 text-right border-b-8 border-gray-100">
           <div className="flex justify-between items-center mb-8">
-             <span className="bg-purple-100 text-purple-600 px-5 py-1.5 rounded-full font-black text-sm">سؤال {currentQuestion + 1} من {questions.length}</span>
+             <span className="bg-[#776ea5]/10 text-[#776ea5] px-5 py-1.5 rounded-full font-black text-sm">سؤال {currentQuestion + 1} من {questions.length}</span>
              <div className="w-1/2 bg-gray-100 h-2 rounded-full overflow-hidden">
-                <div className="bg-purple-500 h-full transition-all duration-300" style={{ width: `${((currentQuestion + 1) / questions.length) * 100}%` }}></div>
+                <div className="bg-[#ffcc00] h-full transition-all duration-300" style={{ width: `${((currentQuestion + 1) / questions.length) * 100}%` }}></div>
              </div>
           </div>
 
@@ -84,17 +84,17 @@ export default function ExamPage() {
               <button
                 key={index}
                 onClick={() => handleOptionSelect(index)}
-                className={`w-full p-5 border-2 rounded-3xl text-right font-bold transition-all transform active:scale-[0.97] ${selectedOptions[currentQuestion] === index ? "bg-purple-600 border-purple-600 text-white shadow-lg" : "border-purple-50 text-gray-600 hover:bg-purple-50"}`}
+                className={`w-full p-5 border-2 rounded-3xl text-right font-bold transition-all transform active:scale-[0.97] ${selectedOptions[currentQuestion] === index ? "bg-[#776ea5] border-[#776ea5] text-white shadow-lg" : "border-gray-50 text-gray-600 hover:bg-gray-50"}`}
               >
-                <span className={`inline-block w-8 h-8 rounded-full ml-3 text-center leading-8 ${selectedOptions[currentQuestion] === index ? 'bg-white text-purple-600' : 'bg-purple-100 text-purple-500'}`}>{index + 1}</span>
+                <span className={`inline-block w-8 h-8 rounded-full ml-3 text-center leading-8 ${selectedOptions[currentQuestion] === index ? 'bg-white text-[#776ea5]' : 'bg-[#776ea5]/10 text-[#776ea5]'}`}>{index + 1}</span>
                 {option}
               </button>
             ))}
           </div>
 
-          <div className="flex justify-between gap-4 mt-12 pt-8 border-t-2 border-purple-50">
-            <button onClick={() => setCurrentQuestion(q => Math.max(0, q - 1))} disabled={currentQuestion === 0} className={`px-8 py-4 rounded-2xl font-black transition-all ${currentQuestion === 0 ? 'bg-gray-100 text-gray-400 cursor-not-allowed' : 'bg-white text-purple-600 border-2 border-purple-600'}`}>السابق</button>
-            <button onClick={handleNext} className="bg-purple-600 text-white px-10 py-4 rounded-2xl font-black shadow-lg hover:bg-purple-700 transition-all">
+          <div className="flex justify-between gap-4 mt-12 pt-8 border-t-2 border-gray-50">
+            <button onClick={() => setCurrentQuestion(q => Math.max(0, q - 1))} disabled={currentQuestion === 0} className={`px-8 py-4 rounded-2xl font-black transition-all ${currentQuestion === 0 ? 'bg-gray-100 text-gray-400 cursor-not-allowed' : 'bg-white text-[#776ea5] border-2 border-[#776ea5]'}`}>السابق</button>
+            <button onClick={handleNext} className="bg-[#ffcc00] text-[#776ea5] px-10 py-4 rounded-2xl font-black shadow-lg hover:bg-[#e6b800] transition-all">
               {currentQuestion === questions.length - 1 ? "إنهاء الاختبار" : "التالي"}
             </button>
           </div>

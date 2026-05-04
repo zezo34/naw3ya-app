@@ -1,89 +1,59 @@
 "use client";
+import CourseCard from "@/components/CourseCard";
 import Link from "next/link";
 
 export default function UnitsPage() {
-  // تم تعديل الـ path ليشاور على المجلدات الحقيقية في مشروعك
-  const unitOne = {
-    title: "الوحدة الأولى: الثوابت والمتغيرات",
-    lessons: [
-      {
-        id: 1,
-        name: "الدرس الأول: الثوابت (Constants)",
-        details: "تعريف الثوابت، الثوابت العددية، والأسية، والنصية.",
-        icon: "🎯",
-        path: "/unit1/lesson1", // المسار الصحيح حسب هيكل ملفاتك
-      },
-      {
-        id: 2,
-        name: "الدرس الثاني: المتغيرات (Variables)",
-        details: "تعريف المتغير، المتغيرات العددية، والمتغيرات النصية.",
-        icon: "📝",
-        path: "/unit1/lesson2", // المسار الصحيح حسب هيكل ملفاتك
-      },
-      {
-        id: 3,
-        name: "اختبار الوحدة",
-        details: "اختبار شامل لتقييم فهمك للثوابت والمتغيرات.",
-        icon: "⭐",
-        path: "/exam",
-      }
-    ]
-  };
+  // بيانات الوحدة
+  const units = [
+    {
+      unitNumber: "1",
+      title: "الوحدة الأولى: الثوابت والمتغيرات",
+      courseName: "الكمبيوتر التعليمي",
+      imageSrc: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?q=80&w=400",
+      lessons: [
+        { name: "الدرس 1: الثوابت", href: "/unit1/lesson1" },
+        { name: "الدرس 2: المتغيرات", href: "/unit1/lesson2" }
+      ]
+    }
+  ];
 
   return (
-    <div dir="rtl" className="min-h-screen bg-purple-400 p-4 md:p-10">
-      <div className="max-w-3xl mx-auto">
-        
-        {/* عنوان الوحدة الكبير */}
-        <div className="text-center mb-12">
-          <h1 className="text-white text-5xl font-black mb-4 drop-shadow-md">
-            {unitOne.title}
-          </h1>
-          <div className="inline-block bg-white/20 backdrop-blur-sm text-white px-6 py-2 rounded-full font-bold">
-            قسم تكنولوجيا التعليم - جامعة عين شمس
-          </div>
-        </div>
+    <div dir="rtl" className="min-h-screen bg-[#776ea5]"> {/* توحيد لون الخلفية للدرجة المعتمدة */}
+    
+      {/* سكشن العنوان الكبير */}
+      <div className="py-24 text-center text-white">
+        <h1 className="text-8xl font-black mb-4 drop-shadow-md">المقرر الدراسي</h1>
+        <p className="text-3xl font-bold opacity-90">اختر الوحدة وابدأ رحلة التعلم</p>
+      </div>
 
-        {/* قائمة الدروس */}
-        <div className="space-y-6">
-          {unitOne.lessons.map((lesson) => (
-            <div 
-              key={lesson.id} 
-              className="bg-white rounded-[2.5rem] p-6 shadow-2xl flex items-center gap-6 border-b-8 border-purple-200 active:scale-95 transition-all"
-            >
-              {/* أيقونة الدرس */}
-              <div className="w-16 h-16 bg-purple-100 rounded-3xl flex items-center justify-center text-3xl shadow-inner">
-                {lesson.icon}
+      {/* عرض الكروت */}
+      <div className="max-w-7xl mx-auto pb-24 px-8 flex justify-center">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-16 justify-items-center">
+          {units.map((unit, index) => (
+            <div key={index} className="bg-white rounded-[3rem] overflow-hidden shadow-2xl flex flex-col w-full max-w-[400px] border-b-8 border-gray-100">
+              {/* صورة الوحدة */}
+              <img src={unit.imageSrc} alt={unit.title} className="w-full h-52 object-cover" />
+              
+              <div className="p-8 text-right flex flex-col flex-grow">
+                <span className="text-[#776ea5] font-black text-sm mb-2">{unit.courseName}</span>
+                <h2 className="text-2xl font-black text-gray-800 mb-6">{unit.title}</h2>
+                
+                {/* الأزرار */}
+                <div className="space-y-4">
+                  {unit.lessons.map((lesson, idx) => (
+                    <Link 
+                      key={idx} 
+                      href={lesson.href}
+                      className="block w-full bg-gray-50 hover:bg-[#ffcc00] text-[#776ea5] py-5 px-6 rounded-2xl font-black text-xl text-center transition-all shadow-sm active:scale-95 border-2 border-transparent hover:border-[#776ea5]/10"
+                    >
+                      {lesson.name}
+                    </Link>
+                  ))}
+                </div>
               </div>
-
-              {/* تفاصيل الدرس */}
-              <div className="flex-1">
-                <h2 className="text-2xl font-extrabold text-gray-800 mb-1">
-                  {lesson.name}
-                </h2>
-                <p className="text-gray-500 font-semibold text-sm">
-                  {lesson.details}
-                </p>
-              </div>
-
-              {/* زر الدخول */}
-              <Link 
-                href={lesson.path}
-                className="bg-purple-500 hover:bg-purple-600 text-white w-12 h-12 rounded-2xl flex items-center justify-center shadow-lg transition-colors"
-              >
-                <span className="text-xl font-bold">←</span>
-              </Link>
             </div>
           ))}
         </div>
-
-        {/* زرار الرجوع للرئيسية */}
-        <div className="mt-12 text-center">
-          <Link href="/" className="bg-white/10 hover:bg-white/20 text-white px-8 py-3 rounded-2xl font-bold transition-all inline-block">
-            العودة للقائمة الرئيسية
-          </Link>
-        </div>
-
       </div>
     </div>
   );

@@ -49,37 +49,27 @@ naw3ya-app
 ├─ public
 │  ├─ file.svg
 │  ├─ globe.svg
-│  ├─ images
-│  │  ├─ image2.png
-│  │  └─ images.png
 │  ├─ next.svg
 │  ├─ vercel.svg
 │  └─ window.svg
 ├─ README.md
 └─ src
-   └─ app
-      ├─ api
-      │  └─ auth
-      │     └─ [...nextauth]
-      │        └─ route.js
-      ├─ components
-      │  ├─ AuthProvider.jsx
-      │  └─ Navbar.jsx
-      ├─ exam
-      │  └─ page.jsx
-      ├─ favicon.ico
-      ├─ globals.css
-      ├─ layout.js
-      ├─ login
-      │  └─ page.jsx
-      ├─ page.js
-      ├─ unit1
-      │  ├─ lesson1
-      │  │  └─ page.jsx
-      │  ├─ lesson2
-      │  │  └─ page.jsx
-      │  └─ page.jsx
-      └─ units
-         └─ page.jsx
+   ├─ app
+   │  ├─ exam
+   │  │  └─ page.jsx
+   │  ├─ favicon.ico
+   │  ├─ globals.css
+   │  ├─ layout.js
+   │  ├─ page.js
+   │  ├─ unit1
+   │  │  ├─ lesson1
+   │  │  │  └─ page.jsx
+   │  │  ├─ lesson2
+   │  │  │  └─ page.jsx
+   │  │  └─ page.jsx
+   │  └─ units
+   │     └─ page.jsx
+   └─ components
+      └─ CourseCard.jsx
 
 ```
