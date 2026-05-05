@@ -1,115 +1,108 @@
 "use client";
-import { useState } from "react";
+
+import { useState, useEffect } from "react";
+import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 
-export default function UnitsPage() {
-  // بنحدد الوحدة النشطة حالياً (default 1)
-  const [activeUnit, setActiveUnit] = useState(1);
+export default function ExamPage() {
+  const searchParams = useSearchParams();
+  const unitId = searchParams.get("unit") || "1"; // بيقرأ رقم الوحدة من اللينك
 
-  const units = {
-    1: {
-      title: "الوحدة الأولى: أساسيات البرمجة",
-      icon: "💻",
-      description: "المتغيرات، الثوابت، أنواع البيانات، والعمليات الحسابية الأساسية التي يحتاجها كل مبرمج.",
-      lessons: [
-        { name: "الدرس الأول: الثوابت", path: "/unit1/lesson1" },
-        { name: "الدرس الثاني: المتغيرات", path: "/unit1/lesson2" },
+  const [currentQuestion, setCurrentQuestion] = useState(0);
+  const [selectedOptions, setSelectedOptions] = useState({});
+  const [showResult, setShowResult] = useState(false);
+
+  // قاعدة بيانات الأسئلة لكل وحدة
+  const allExams = {
+    "1": {
+      title: "امتحان الوحدة الأولى: الأساسيات",
+      questions: [
+        { q: "ما هو التعريف الصحيح للثوابت؟", options: ["تتغير قيمتها", "تبقى ثابتة", "دوال رياضية", "مساحة مؤقتة"], answer: 1 },
+        { q: "أي مما يلي اسم متغير صحيح؟", options: ["1Score", "User Name", "total_2", "first-name"], answer: 2 },
+        { q: "المتغير يحجز مساحة في الـ RAM.", options: ["صح", "خطأ"], answer: 0 },
+        { q: "لتخزين النصوص نستخدم نوع:", options: ["Integer", "Boolean", "String", "Double"], answer: 2 },
+        { q: "الثابت النصي يوضع بين \" \".", options: ["صح", "خطأ"], answer: 0 },
       ]
     },
-    2: {
-      title: "الوحدة الثانية: الكلاسات والكائنات",
-      icon: "🏗️",
-      description: "مفاهيم الـ OOP الأساسية مثل الكلاس، الكائن، وعملية التغليف لحماية البيانات.",
-      lessons: [
-        { name: "الدرس الأول: الكلاس والكائن", path: "/unit2/lesson1" },
-        { name: "الدرس الثاني: التغليف (Encapsulation)", path: "/unit2/lesson2" },
+    "2": {
+      title: "امتحان الوحدة الثانية: الكلاسات والتغليف",
+      questions: [
+        { q: "مفهوم إخفاء البيانات وحمايتها يسمى:", options: ["Inheritance", "Encapsulation", "Polymorphism", "Abstraction"], answer: 1 },
+        { q: "الـ Class يعتبر مخطط (Blueprint) لإنشاء الكائنات.", options: ["صح", "خطأ"], answer: 0 },
+        { q: "الـ Private يمكن الوصول إليه من خارج الكلاس.", options: ["صح", "خطأ"], answer: 1 },
+        { q: "دالة تنفذ تلقائياً عند إنشاء الكائن:", options: ["Destructor", "Constructor", "Method", "Property"], answer: 1 },
+        { q: "يمكن إنشاء أكثر من كائن من نفس الكلاس.", options: ["صح", "خطأ"], answer: 0 },
       ]
     },
-    3: {
-      title: "الوحدة الثالثة: الوراثة وتعدد الأشكال",
-      icon: "🧬",
-      description: "تطوير الكود باستخدام الوراثة وفهم تعدد الأشكال لجعل الكود أكتر مرونة.",
-      lessons: [
-        { name: "الدرس الأول: الوراثة", path: "/unit3/lesson1" },
-        { name: "الدرس الثاني: تعدد الأشكال", path: "/unit3/lesson2" },
+    "3": {
+      title: "امتحان الوحدة الثالثة: الوراثة وتعدد الأشكال",
+      questions: [
+        { q: "الوراثة تسمح لكلاس بوراثة صفات من كلاس آخر.", options: ["صح", "خطأ"], answer: 0 },
+        { q: "العلاقة 'is-a' تشير إلى مفهوم:", options: ["Encapsulation", "Inheritance", "Abstraction", "Interface"], answer: 1 },
+        { q: "تستخدم كلمة virtual في الكلاس الأب للسماح بالتعديل.", options: ["صح", "خطأ"], answer: 0 },
+        { q: "تستخدم كلمة override في الكلاس الابن.", options: ["صح", "خطأ"], answer: 0 },
+        { q: "الوراثة تساعد في تقليل تكرار الكود.", options: ["صح", "خطأ"], answer: 0 },
       ]
     }
   };
 
-  return (
-    <div dir="rtl" className="min-h-screen bg-[#776ea5] flex flex-col items-center p-6 text-white font-sans">
-      
-      {/* 1. أزرار التنقل العلوية (المنيو) */}
-      <h1 className="text-4xl font-black mb-12 mt-10">اختر الوحدة الدراسية 📝</h1>
-      
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 w-full max-w-5xl mb-16">
-        {[1, 2, 3].map((num) => (
-          <button
-            key={num}
-            onClick={() => setActiveUnit(num)}
-            className={`p-10 rounded-[3rem] transition-all duration-300 shadow-2xl border-b-8 ${
-              activeUnit === num 
-              ? "bg-[#ffcc00] text-[#776ea5] scale-105 border-yellow-600" 
-              : "bg-white text-[#776ea5] border-gray-200 hover:scale-105"
-            }`}
-          >
-            <h2 className="text-3xl font-black italic underline">الوحدة {num}</h2>
-            <p className="mt-2 font-bold opacity-60">
-              {activeUnit === num ? "أنت هنا الآن 📍" : "عرض المحتوى 📖"}
-            </p>
-          </button>
-        ))}
-      </div>
+  const exam = allExams[unitId] || allExams["1"];
+  const questions = exam.questions;
 
-      {/* 2. عرض كارت الوحدة المختارة (الستايل الفخم) */}
-      <div className="w-full max-w-4xl animate-in fade-in zoom-in duration-500">
-        <div className="bg-white rounded-[3.5rem] p-10 md:p-14 shadow-[0_20px_50px_rgba(0,0,0,0.2)] border-b-[12px] border-gray-200 text-[#776ea5] relative overflow-hidden">
-          
-          {/* خلفية جمالية خفيفة */}
-          <div className="absolute -top-10 -left-10 text-[15rem] opacity-[0.03] font-black pointer-events-none">
-            {activeUnit}
-          </div>
+  const handleNext = () => {
+    if (currentQuestion < questions.length - 1) setCurrentQuestion(currentQuestion + 1);
+    else setShowResult(true);
+  };
 
-          <div className="relative z-10">
-            <div className="flex items-center gap-6 mb-10 pb-8 border-b-4 border-gray-50">
-              <span className="text-7xl md:text-8xl drop-shadow-sm">{units[activeUnit].icon}</span>
-              <h2 className="text-3xl md:text-5xl font-black leading-tight italic">{units[activeUnit].title}</h2>
-            </div>
+  const calculateScore = () => {
+    let score = 0;
+    questions.forEach((q, i) => { if (selectedOptions[i] === q.answer) score++; });
+    return score;
+  };
 
-            <p className="text-gray-600 font-bold text-xl md:text-2xl mb-12 leading-relaxed bg-purple-50/50 p-8 rounded-[2.5rem] border-2 border-dashed border-purple-100">
-              {units[activeUnit].description}
-            </p>
-
-            {/* قائمة الدروس */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
-              {units[activeUnit].lessons.map((lesson, index) => (
-                <Link 
-                  key={index} 
-                  href={lesson.path}
-                  className="group bg-white p-6 rounded-3xl border-2 border-gray-100 hover:border-[#776ea5] hover:bg-purple-50 transition-all shadow-sm flex items-center justify-between"
-                >
-                  <span className="font-black text-xl text-gray-700 group-hover:text-[#776ea5]">
-                    📖 {lesson.name}
-                  </span>
-                  <span className="text-2xl group-hover:translate-x-[-10px] transition-transform">←</span>
-                </Link>
-              ))}
-            </div>
-
-            {/* زرار الامتحان المربوط */}
-            <div className="text-center pt-6">
-              <Link 
-                href={`/exam?unit=${activeUnit}`}
-                className="inline-block w-full md:w-auto bg-[#ffcc00] text-[#776ea5] px-24 py-6 rounded-[3rem] font-black text-3xl shadow-[0_12px_0_0_#d4ac00] hover:translate-y-1 hover:shadow-[0_6px_0_0_#d4ac00] active:scale-95 transition-all drop-shadow-xl"
-              >
-                ابدأ التحدي 🎯
-              </Link>
-            </div>
-          </div>
+  if (showResult) {
+    const finalScore = calculateScore();
+    return (
+      <div dir="rtl" className="min-h-screen bg-[#776ea5] flex items-center justify-center p-6 text-center">
+        <div className="bg-white rounded-[3rem] p-12 max-w-md w-full shadow-2xl border-b-8 border-gray-200 text-[#776ea5]">
+          <h2 className="text-3xl font-black mb-4">انتهى امتحان {exam.title}</h2>
+          <p className="text-6xl font-black text-yellow-500 mb-8">{finalScore} / {questions.length}</p>
+          <Link href="/units" className="block bg-[#776ea5] text-white py-4 rounded-2xl font-black text-xl shadow-lg">العودة للدروس 📚</Link>
         </div>
       </div>
+    );
+  }
 
-      <p className="mt-20 mb-10 font-bold opacity-30 italic">Developed by Gemini & Hero Developer</p>
+  return (
+    <div dir="rtl" className="min-h-screen bg-[#776ea5] flex flex-col items-center pt-20 p-6">
+      <div className="max-w-3xl w-full bg-white rounded-[2.5rem] p-8 md:p-12 shadow-2xl border-b-8 border-gray-200">
+        <h1 className="text-xl font-bold text-gray-400 mb-2 italic underline">{exam.title}</h1>
+        <h2 className="text-2xl md:text-3xl font-black text-[#776ea5] mb-10 leading-tight">
+          {questions[currentQuestion].q}
+        </h2>
+
+        <div className="grid grid-cols-1 gap-4">
+          {questions[currentQuestion].options.map((op, i) => (
+            <button
+              key={i}
+              onClick={() => setSelectedOptions({ ...selectedOptions, [currentQuestion]: i })}
+              className={`p-5 rounded-2xl text-right font-bold text-lg border-2 transition-all ${
+                selectedOptions[currentQuestion] === i ? "border-[#776ea5] bg-purple-50 text-[#776ea5]" : "border-gray-100 text-gray-700"
+              }`}
+            >
+              {op}
+            </button>
+          ))}
+        </div>
+
+        <button
+          onClick={handleNext}
+          disabled={selectedOptions[currentQuestion] === undefined}
+          className="mt-12 w-full bg-yellow-400 text-[#776ea5] py-5 rounded-2xl font-black text-2xl shadow-xl disabled:bg-gray-200 disabled:text-gray-400 transition-all"
+        >
+          {currentQuestion === questions.length - 1 ? "رؤية النتيجة ✅" : "السؤال التالي ←"}
+        </button>
+      </div>
     </div>
   );
 }
