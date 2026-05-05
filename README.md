@@ -37,6 +37,7 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/bui
 
 
 
+
 ```
 naw3ya-app
 ├─ AGENTS.md
@@ -49,6 +50,12 @@ naw3ya-app
 ├─ public
 │  ├─ file.svg
 │  ├─ globe.svg
+│  ├─ image
+│  │  ├─ 1.jfif
+│  │  ├─ 2.jpg
+│  │  ├─ 3.webp
+│  │  ├─ 4.png
+│  │  └─ 5.png
 │  ├─ next.svg
 │  ├─ vercel.svg
 │  └─ window.svg
@@ -67,9 +74,21 @@ naw3ya-app
    │  │  ├─ lesson2
    │  │  │  └─ page.jsx
    │  │  └─ page.jsx
+   │  ├─ unit2
+   │  │  ├─ lesson1
+   │  │  │  └─ page.jsx
+   │  │  └─ lesson2
+   │  │     └─ page.jsx
+   │  ├─ unit3
+   │  │  ├─ lesson1
+   │  │  │  └─ page.jsx
+   │  │  └─ lesson2
+   │  │     └─ page.jsx
    │  └─ units
    │     └─ page.jsx
-   └─ components
-      └─ CourseCard.jsx
+   ├─ components
+   │  ├─ CourseCard.jsx
+   │  └─ Navbar.jsx
+   └─ copo
 
 ```
