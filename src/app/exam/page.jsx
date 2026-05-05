@@ -1,114 +1,115 @@
 "use client";
+import { useState } from "react";
 import Link from "next/link";
 
 export default function UnitsPage() {
-  const units = [
-    {
-      id: 1,
+  // بنحدد الوحدة النشطة حالياً (default 1)
+  const [activeUnit, setActiveUnit] = useState(1);
+
+  const units = {
+    1: {
       title: "الوحدة الأولى: أساسيات البرمجة",
       icon: "💻",
-      description: "المتغيرات، الثوابت، أنواع البيانات، والعمليات الحسابية الأساسية.",
+      description: "المتغيرات، الثوابت، أنواع البيانات، والعمليات الحسابية الأساسية التي يحتاجها كل مبرمج.",
       lessons: [
         { name: "الدرس الأول: الثوابت", path: "/unit1/lesson1" },
         { name: "الدرس الثاني: المتغيرات", path: "/unit1/lesson2" },
       ]
     },
-    {
-      id: 2,
+    2: {
       title: "الوحدة الثانية: الكلاسات والكائنات",
       icon: "🏗️",
-      description: "مفاهيم الـ OOP الأساسية مثل الكلاس، الكائن، وعملية التغليف.",
+      description: "مفاهيم الـ OOP الأساسية مثل الكلاس، الكائن، وعملية التغليف لحماية البيانات.",
       lessons: [
         { name: "الدرس الأول: الكلاس والكائن", path: "/unit2/lesson1" },
         { name: "الدرس الثاني: التغليف (Encapsulation)", path: "/unit2/lesson2" },
       ]
     },
-    {
-      id: 3,
+    3: {
       title: "الوحدة الثالثة: الوراثة وتعدد الأشكال",
       icon: "🧬",
-      description: "تطوير الكود باستخدام الوراثة وفهم تعدد الأشكال في الكائنات.",
+      description: "تطوير الكود باستخدام الوراثة وفهم تعدد الأشكال لجعل الكود أكتر مرونة.",
       lessons: [
         { name: "الدرس الأول: الوراثة", path: "/unit3/lesson1" },
         { name: "الدرس الثاني: تعدد الأشكال", path: "/unit3/lesson2" },
       ]
     }
-  ];
+  };
 
   return (
-    <div dir="rtl" className="min-h-screen bg-[#776ea5] flex flex-col items-center pt-24 md:pt-32 p-6 font-sans">
+    <div dir="rtl" className="min-h-screen bg-[#776ea5] flex flex-col items-center p-6 text-white font-sans">
       
-      {/* رأس الصفحة الفخم */}
-      <div className="max-w-4xl w-full text-center mb-16 relative">
-        <h1 className="text-4xl md:text-6xl font-black text-white mb-4 drop-shadow-lg relative z-10 italic">
-          رحلة تعلم الـ OOP 🎓
-        </h1>
-        <p className="text-xl text-purple-100 font-bold relative z-10 max-w-2xl mx-auto opacity-80">
-          استكشف الوحدات التعليمية وابدأ في تطوير مهاراتك البرمجية الآن.
-        </p>
-      </div>
-
-      {/* قائمة الوحدات بالستايل الأول (تحت بعض وعريضة) */}
-      <div className="flex flex-col gap-12 w-full max-w-4xl">
-        {units.map((unit) => (
-          <div 
-            key={unit.id}
-            className="bg-white rounded-[3rem] p-8 md:p-12 shadow-2xl border-b-8 border-gray-200 relative group transition-all duration-300 hover:-translate-y-2"
+      {/* 1. أزرار التنقل العلوية (المنيو) */}
+      <h1 className="text-4xl font-black mb-12 mt-10">اختر الوحدة الدراسية 📝</h1>
+      
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 w-full max-w-5xl mb-16">
+        {[1, 2, 3].map((num) => (
+          <button
+            key={num}
+            onClick={() => setActiveUnit(num)}
+            className={`p-10 rounded-[3rem] transition-all duration-300 shadow-2xl border-b-8 ${
+              activeUnit === num 
+              ? "bg-[#ffcc00] text-[#776ea5] scale-105 border-yellow-600" 
+              : "bg-white text-[#776ea5] border-gray-200 hover:scale-105"
+            }`}
           >
-            {/* رقم الوحدة العائم المميز */}
-            <span className="absolute -top-6 -right-6 bg-yellow-400 text-[#776ea5] w-20 h-20 rounded-full flex items-center justify-center font-black text-4xl shadow-xl border-4 border-white transform group-hover:rotate-12 transition-transform">
-              {unit.id}
-            </span>
-
-            <div className="flex flex-col h-full">
-              {/* عنوان الوحدة */}
-              <div className="flex items-center gap-6 mb-8 pb-6 border-b-2 border-gray-50">
-                <div className="text-6xl md:text-7xl">{unit.icon}</div>
-                <h2 className="text-3xl md:text-4xl font-black text-[#776ea5] leading-tight">{unit.title}</h2>
-              </div>
-
-              {/* الشرح والدروس */}
-              <div className="space-y-8 text-right flex-grow">
-                <p className="text-gray-600 font-bold text-xl leading-relaxed bg-gray-50 p-6 rounded-[2rem]">
-                  {unit.description}
-                </p>
-                
-                <div className="bg-white border-4 border-dashed border-gray-50 p-6 rounded-[2.5rem]">
-                  <h3 className="font-black text-gray-300 mb-6 underline text-lg">الدروس المتاحة في هذه الوحدة:</h3>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    {unit.lessons.map((lesson, lIndex) => (
-                      <Link 
-                        key={lIndex} 
-                        href={lesson.path}
-                        className="bg-white p-5 rounded-2xl text-gray-700 font-black hover:bg-purple-50 hover:text-[#776ea5] hover:scale-105 transition-all flex items-center gap-3 border-2 border-gray-50 shadow-sm"
-                      >
-                        <span className="bg-[#776ea5] text-white w-8 h-8 rounded-full flex items-center justify-center text-xs">
-                          {lIndex + 1}
-                        </span> 
-                        {lesson.name}
-                      </Link>
-                    ))}
-                  </div>
-                </div>
-              </div>
-
-              {/* 👇👇 زرار الامتحان المربوط مباشرة برقم الوحدة 👇👇 */}
-              <div className="mt-12 text-center">
-                <Link 
-                  href={`/exam?unit=${unit.id}`} // ده الربط اللي أنت عاوزه يا نجم!
-                  className="w-full md:w-auto inline-block bg-[#ffcc00] text-[#776ea5] px-20 py-5 rounded-[2.5rem] font-black text-2xl shadow-[0_10px_0_0_#d4ac00] hover:translate-y-1 hover:shadow-[0_5px_0_0_#d4ac00] active:scale-95 transition-all"
-                >
-                  ابدأ اختبار الوحدة {unit.id} 🎯
-                </Link>
-              </div>
-            </div>
-          </div>
+            <h2 className="text-3xl font-black italic underline">الوحدة {num}</h2>
+            <p className="mt-2 font-bold opacity-60">
+              {activeUnit === num ? "أنت هنا الآن 📍" : "عرض المحتوى 📖"}
+            </p>
+          </button>
         ))}
       </div>
 
-      <footer className="mt-20 mb-10 text-white/50 font-black tracking-widest uppercase">
-        OOP Learning Platform
-      </footer>
+      {/* 2. عرض كارت الوحدة المختارة (الستايل الفخم) */}
+      <div className="w-full max-w-4xl animate-in fade-in zoom-in duration-500">
+        <div className="bg-white rounded-[3.5rem] p-10 md:p-14 shadow-[0_20px_50px_rgba(0,0,0,0.2)] border-b-[12px] border-gray-200 text-[#776ea5] relative overflow-hidden">
+          
+          {/* خلفية جمالية خفيفة */}
+          <div className="absolute -top-10 -left-10 text-[15rem] opacity-[0.03] font-black pointer-events-none">
+            {activeUnit}
+          </div>
+
+          <div className="relative z-10">
+            <div className="flex items-center gap-6 mb-10 pb-8 border-b-4 border-gray-50">
+              <span className="text-7xl md:text-8xl drop-shadow-sm">{units[activeUnit].icon}</span>
+              <h2 className="text-3xl md:text-5xl font-black leading-tight italic">{units[activeUnit].title}</h2>
+            </div>
+
+            <p className="text-gray-600 font-bold text-xl md:text-2xl mb-12 leading-relaxed bg-purple-50/50 p-8 rounded-[2.5rem] border-2 border-dashed border-purple-100">
+              {units[activeUnit].description}
+            </p>
+
+            {/* قائمة الدروس */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
+              {units[activeUnit].lessons.map((lesson, index) => (
+                <Link 
+                  key={index} 
+                  href={lesson.path}
+                  className="group bg-white p-6 rounded-3xl border-2 border-gray-100 hover:border-[#776ea5] hover:bg-purple-50 transition-all shadow-sm flex items-center justify-between"
+                >
+                  <span className="font-black text-xl text-gray-700 group-hover:text-[#776ea5]">
+                    📖 {lesson.name}
+                  </span>
+                  <span className="text-2xl group-hover:translate-x-[-10px] transition-transform">←</span>
+                </Link>
+              ))}
+            </div>
+
+            {/* زرار الامتحان المربوط */}
+            <div className="text-center pt-6">
+              <Link 
+                href={`/exam?unit=${activeUnit}`}
+                className="inline-block w-full md:w-auto bg-[#ffcc00] text-[#776ea5] px-24 py-6 rounded-[3rem] font-black text-3xl shadow-[0_12px_0_0_#d4ac00] hover:translate-y-1 hover:shadow-[0_6px_0_0_#d4ac00] active:scale-95 transition-all drop-shadow-xl"
+              >
+                ابدأ التحدي 🎯
+              </Link>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <p className="mt-20 mb-10 font-bold opacity-30 italic">Developed by Gemini & Hero Developer</p>
     </div>
   );
 }
