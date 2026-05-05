@@ -1,108 +1,114 @@
 "use client";
-
-import { useState, useEffect } from "react";
-import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 
-export default function ExamPage() {
-  const searchParams = useSearchParams();
-  const unitId = searchParams.get("unit") || "1"; // بيقرأ رقم الوحدة من اللينك
-
-  const [currentQuestion, setCurrentQuestion] = useState(0);
-  const [selectedOptions, setSelectedOptions] = useState({});
-  const [showResult, setShowResult] = useState(false);
-
-  // قاعدة بيانات الأسئلة لكل وحدة
-  const allExams = {
-    "1": {
-      title: "امتحان الوحدة الأولى: الأساسيات",
-      questions: [
-        { q: "ما هو التعريف الصحيح للثوابت؟", options: ["تتغير قيمتها", "تبقى ثابتة", "دوال رياضية", "مساحة مؤقتة"], answer: 1 },
-        { q: "أي مما يلي اسم متغير صحيح؟", options: ["1Score", "User Name", "total_2", "first-name"], answer: 2 },
-        { q: "المتغير يحجز مساحة في الـ RAM.", options: ["صح", "خطأ"], answer: 0 },
-        { q: "لتخزين النصوص نستخدم نوع:", options: ["Integer", "Boolean", "String", "Double"], answer: 2 },
-        { q: "الثابت النصي يوضع بين \" \".", options: ["صح", "خطأ"], answer: 0 },
+export default function UnitsPage() {
+  const units = [
+    {
+      id: 1,
+      title: "الوحدة الأولى: أساسيات البرمجة",
+      icon: "💻",
+      description: "المتغيرات، الثوابت، أنواع البيانات، والعمليات الحسابية الأساسية.",
+      lessons: [
+        { name: "الدرس الأول: الثوابت", path: "/unit1/lesson1" },
+        { name: "الدرس الثاني: المتغيرات", path: "/unit1/lesson2" },
       ]
     },
-    "2": {
-      title: "امتحان الوحدة الثانية: الكلاسات والتغليف",
-      questions: [
-        { q: "مفهوم إخفاء البيانات وحمايتها يسمى:", options: ["Inheritance", "Encapsulation", "Polymorphism", "Abstraction"], answer: 1 },
-        { q: "الـ Class يعتبر مخطط (Blueprint) لإنشاء الكائنات.", options: ["صح", "خطأ"], answer: 0 },
-        { q: "الـ Private يمكن الوصول إليه من خارج الكلاس.", options: ["صح", "خطأ"], answer: 1 },
-        { q: "دالة تنفذ تلقائياً عند إنشاء الكائن:", options: ["Destructor", "Constructor", "Method", "Property"], answer: 1 },
-        { q: "يمكن إنشاء أكثر من كائن من نفس الكلاس.", options: ["صح", "خطأ"], answer: 0 },
+    {
+      id: 2,
+      title: "الوحدة الثانية: الكلاسات والكائنات",
+      icon: "🏗️",
+      description: "مفاهيم الـ OOP الأساسية مثل الكلاس، الكائن، وعملية التغليف.",
+      lessons: [
+        { name: "الدرس الأول: الكلاس والكائن", path: "/unit2/lesson1" },
+        { name: "الدرس الثاني: التغليف (Encapsulation)", path: "/unit2/lesson2" },
       ]
     },
-    "3": {
-      title: "امتحان الوحدة الثالثة: الوراثة وتعدد الأشكال",
-      questions: [
-        { q: "الوراثة تسمح لكلاس بوراثة صفات من كلاس آخر.", options: ["صح", "خطأ"], answer: 0 },
-        { q: "العلاقة 'is-a' تشير إلى مفهوم:", options: ["Encapsulation", "Inheritance", "Abstraction", "Interface"], answer: 1 },
-        { q: "تستخدم كلمة virtual في الكلاس الأب للسماح بالتعديل.", options: ["صح", "خطأ"], answer: 0 },
-        { q: "تستخدم كلمة override في الكلاس الابن.", options: ["صح", "خطأ"], answer: 0 },
-        { q: "الوراثة تساعد في تقليل تكرار الكود.", options: ["صح", "خطأ"], answer: 0 },
+    {
+      id: 3,
+      title: "الوحدة الثالثة: الوراثة وتعدد الأشكال",
+      icon: "🧬",
+      description: "تطوير الكود باستخدام الوراثة وفهم تعدد الأشكال في الكائنات.",
+      lessons: [
+        { name: "الدرس الأول: الوراثة", path: "/unit3/lesson1" },
+        { name: "الدرس الثاني: تعدد الأشكال", path: "/unit3/lesson2" },
       ]
     }
-  };
-
-  const exam = allExams[unitId] || allExams["1"];
-  const questions = exam.questions;
-
-  const handleNext = () => {
-    if (currentQuestion < questions.length - 1) setCurrentQuestion(currentQuestion + 1);
-    else setShowResult(true);
-  };
-
-  const calculateScore = () => {
-    let score = 0;
-    questions.forEach((q, i) => { if (selectedOptions[i] === q.answer) score++; });
-    return score;
-  };
-
-  if (showResult) {
-    const finalScore = calculateScore();
-    return (
-      <div dir="rtl" className="min-h-screen bg-[#776ea5] flex items-center justify-center p-6 text-center">
-        <div className="bg-white rounded-[3rem] p-12 max-w-md w-full shadow-2xl border-b-8 border-gray-200 text-[#776ea5]">
-          <h2 className="text-3xl font-black mb-4">انتهى امتحان {exam.title}</h2>
-          <p className="text-6xl font-black text-yellow-500 mb-8">{finalScore} / {questions.length}</p>
-          <Link href="/units" className="block bg-[#776ea5] text-white py-4 rounded-2xl font-black text-xl shadow-lg">العودة للدروس 📚</Link>
-        </div>
-      </div>
-    );
-  }
+  ];
 
   return (
-    <div dir="rtl" className="min-h-screen bg-[#776ea5] flex flex-col items-center pt-20 p-6">
-      <div className="max-w-3xl w-full bg-white rounded-[2.5rem] p-8 md:p-12 shadow-2xl border-b-8 border-gray-200">
-        <h1 className="text-xl font-bold text-gray-400 mb-2 italic underline">{exam.title}</h1>
-        <h2 className="text-2xl md:text-3xl font-black text-[#776ea5] mb-10 leading-tight">
-          {questions[currentQuestion].q}
-        </h2>
-
-        <div className="grid grid-cols-1 gap-4">
-          {questions[currentQuestion].options.map((op, i) => (
-            <button
-              key={i}
-              onClick={() => setSelectedOptions({ ...selectedOptions, [currentQuestion]: i })}
-              className={`p-5 rounded-2xl text-right font-bold text-lg border-2 transition-all ${
-                selectedOptions[currentQuestion] === i ? "border-[#776ea5] bg-purple-50 text-[#776ea5]" : "border-gray-100 text-gray-700"
-              }`}
-            >
-              {op}
-            </button>
-          ))}
-        </div>
-
-        <button
-          onClick={handleNext}
-          disabled={selectedOptions[currentQuestion] === undefined}
-          className="mt-12 w-full bg-yellow-400 text-[#776ea5] py-5 rounded-2xl font-black text-2xl shadow-xl disabled:bg-gray-200 disabled:text-gray-400 transition-all"
-        >
-          {currentQuestion === questions.length - 1 ? "رؤية النتيجة ✅" : "السؤال التالي ←"}
-        </button>
+    <div dir="rtl" className="min-h-screen bg-[#776ea5] flex flex-col items-center pt-24 md:pt-32 p-6 font-sans">
+      
+      {/* رأس الصفحة الفخم */}
+      <div className="max-w-4xl w-full text-center mb-16 relative">
+        <h1 className="text-4xl md:text-6xl font-black text-white mb-4 drop-shadow-lg relative z-10 italic">
+          رحلة تعلم الـ OOP 🎓
+        </h1>
+        <p className="text-xl text-purple-100 font-bold relative z-10 max-w-2xl mx-auto opacity-80">
+          استكشف الوحدات التعليمية وابدأ في تطوير مهاراتك البرمجية الآن.
+        </p>
       </div>
+
+      {/* قائمة الوحدات بالستايل الأول (تحت بعض وعريضة) */}
+      <div className="flex flex-col gap-12 w-full max-w-4xl">
+        {units.map((unit) => (
+          <div 
+            key={unit.id}
+            className="bg-white rounded-[3rem] p-8 md:p-12 shadow-2xl border-b-8 border-gray-200 relative group transition-all duration-300 hover:-translate-y-2"
+          >
+            {/* رقم الوحدة العائم المميز */}
+            <span className="absolute -top-6 -right-6 bg-yellow-400 text-[#776ea5] w-20 h-20 rounded-full flex items-center justify-center font-black text-4xl shadow-xl border-4 border-white transform group-hover:rotate-12 transition-transform">
+              {unit.id}
+            </span>
+
+            <div className="flex flex-col h-full">
+              {/* عنوان الوحدة */}
+              <div className="flex items-center gap-6 mb-8 pb-6 border-b-2 border-gray-50">
+                <div className="text-6xl md:text-7xl">{unit.icon}</div>
+                <h2 className="text-3xl md:text-4xl font-black text-[#776ea5] leading-tight">{unit.title}</h2>
+              </div>
+
+              {/* الشرح والدروس */}
+              <div className="space-y-8 text-right flex-grow">
+                <p className="text-gray-600 font-bold text-xl leading-relaxed bg-gray-50 p-6 rounded-[2rem]">
+                  {unit.description}
+                </p>
+                
+                <div className="bg-white border-4 border-dashed border-gray-50 p-6 rounded-[2.5rem]">
+                  <h3 className="font-black text-gray-300 mb-6 underline text-lg">الدروس المتاحة في هذه الوحدة:</h3>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    {unit.lessons.map((lesson, lIndex) => (
+                      <Link 
+                        key={lIndex} 
+                        href={lesson.path}
+                        className="bg-white p-5 rounded-2xl text-gray-700 font-black hover:bg-purple-50 hover:text-[#776ea5] hover:scale-105 transition-all flex items-center gap-3 border-2 border-gray-50 shadow-sm"
+                      >
+                        <span className="bg-[#776ea5] text-white w-8 h-8 rounded-full flex items-center justify-center text-xs">
+                          {lIndex + 1}
+                        </span> 
+                        {lesson.name}
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+              </div>
+
+              {/* 👇👇 زرار الامتحان المربوط مباشرة برقم الوحدة 👇👇 */}
+              <div className="mt-12 text-center">
+                <Link 
+                  href={`/exam?unit=${unit.id}`} // ده الربط اللي أنت عاوزه يا نجم!
+                  className="w-full md:w-auto inline-block bg-[#ffcc00] text-[#776ea5] px-20 py-5 rounded-[2.5rem] font-black text-2xl shadow-[0_10px_0_0_#d4ac00] hover:translate-y-1 hover:shadow-[0_5px_0_0_#d4ac00] active:scale-95 transition-all"
+                >
+                  ابدأ اختبار الوحدة {unit.id} 🎯
+                </Link>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <footer className="mt-20 mb-10 text-white/50 font-black tracking-widest uppercase">
+        OOP Learning Platform
+      </footer>
     </div>
   );
 }
